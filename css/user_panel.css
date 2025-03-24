@@ -1,0 +1,462 @@
+.vertical-nav-menu li a {
+    display: block;
+    line-height: 2.4rem;
+    font-size: 16px;
+    height: 3rem;
+    padding: 5px 1.5rem 0 45px;
+    position: relative;
+    border-radius: .25rem;
+    color: #000;
+    white-space: nowrap;
+    transition: all .2s;
+    margin: .1rem 0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.vertical-nav-menu li a.mm-active {
+    color: #fff;
+    background: #ff00f2;
+    font-weight: bold;
+}
+
+.vertical-nav-menu li a.mm-active i {
+    color: #fff !important;
+}
+
+
+.vertical-nav-menu i.metismenu-state-icon, .vertical-nav-menu i.metismenu-icon {
+    opacity: 0.8;
+}
+
+.widget-content .widget-content-left .widget-heading {
+    font-size: 16px;
+}
+
+.profile_btn {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #FF6922 !important;
+}
+
+.app-main .app-main__inner {
+    padding: 15px 15px 0;
+    flex: 1;
+}
+
+.app-page-title {
+    padding: 10px 15px;
+    position: relative;
+    background: rgb(255 255 255) !important;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.app-header.header-shadow {
+    box-shadow: 0 0 5px #000;
+}
+
+.app-main .app-main__inner {
+    padding: 0px 15px;
+    flex: 1;
+}
+
+.widget-content .widget-content-wrapper {
+    display: flex;
+    flex: 1;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .header-user-name {
+        position: relative;
+        float: left;
+        cursor: pointer;
+        color: #666;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-top: 10px;
+        font-weight: 400;
+        margin-top: 0px !important;
+    }
+}
+
+.upload__inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.upload__btn {
+    display: inline-block;
+    font-weight: 600;
+    color: #fff !important;
+    text-align: center;
+    min-width: 130px;
+    /* padding: 5px; */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid;
+    background-color: #FF385C;
+    border-color: #fff;
+    border-radius: 10px;
+    line-height: 26px;
+    font-size: 14px;
+}
+
+.upload__btn:hover {
+    background-color: #1d293e;
+    color: #4045ba;
+    transition: all 0.3s ease;
+}
+
+.upload__btn-box {
+    margin-bottom: 10px;
+}
+
+.upload__img-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.upload__img-box {
+    width: 200px;
+    padding: 0 10px;
+    margin-bottom: 12px;
+}
+
+.upload__img-close {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.upload__img-close:after {
+    content: '\2716';
+    font-size: 14px;
+    color: white;
+}
+
+.img-bg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    padding-bottom: 100%;
+}
+
+.para {
+    line-height: 16px;
+    margin-top: 0 !important;
+    margin-bottom: 1rem;
+    padding-top: 0.7rem;
+
+}
+
+.app-header__logo .logo-src {
+    height: auto;
+    width: auto;
+    font-size: 25px;
+    background: none;
+}
+
+.modal-backdrop {
+    z-index: 1 !important;
+}
+
+.app-sidebar {
+    z-index: 1 !important;
+}
+
+
+.modal.show .modal-dialog {
+    transform: none;
+    margin-top: 65px;
+    z-index: 1050;
+}
+
+.image_area {
+    position: relative;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.preview {
+    overflow: hidden;
+    width: 160px;
+    height: 160px;
+    margin: 10px;
+    border: 1px solid red;
+}
+
+.modal-lg {
+    max-width: 1000px !important;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    height: 0;
+    transition: .5s ease;
+    width: 100%;
+}
+
+.image_area:hover .overlay {
+    height: 50%;
+    cursor: pointer;
+}
+
+.text {
+    color: #333;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.modal {
+    overflow: scroll !important;
+}
+
+input#crop {
+    padding: 5px 25px 5px 25px;
+    background: lightseagreen;
+    border: #485c61 1px solid;
+    color: #FFF;
+    visibility: hidden;
+}
+
+#cropped_img {
+    margin-top: 40px;
+}
+
+.DataCard {
+    border: 0.25px solid #fd7fcd;
+    border-radius: 30px !important;
+    box-shadow: 0 0 6px #fd7fcd;
+}
+
+.app-main .app-main__outer, .app-main {
+    z-index: auto !important;
+}
+
+.user_profile .card {
+    position: relative;
+    flex-direction: row !important;
+    word-wrap: break-word !important;
+
+}
+
+.user_profile .card .card-footer {
+    padding: 5px 15px;
+    background: #F89922;
+    margin-top: 5px;
+}
+
+
+.user_profile .bottom_btn {
+    position: relative;
+    right: -222px;
+    bottom: 58px;
+    /* width: 20px; */
+}
+
+.user_profile .card-footer a {
+    width: 100%;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    color: #000;
+    white-space: nowrap;
+}
+
+.user_profile .card-footer a i {
+    font-size: 16px;
+}
+
+.user_profile .card-footer a .fa-paper-plane {
+    color: #0088ff;
+}
+
+.user_profile .card-footer a .fa-trash-alt {
+    color: red;
+}
+
+.user_profile .card-footer a .fa-comment-dots {
+    color: #0088ff;
+}
+
+.user_profile .card-footer a .fa-eye {
+    color: #0088ff;
+}
+
+.user_profile .card-footer table,
+.user_profile .card-footer th,
+.user_profile .card-footer td {
+    border: none !important;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .user_profile .bottom_btn {
+        position: relative;
+        right: 0px;
+        bottom: 10px;
+        /* width: 20px; */
+    }
+
+    .user_profile .col-3 {
+        flex: 0 0 auto;
+        width: 15%;
+    }
+
+    .user_profile .card {
+        position: relative;
+
+    }
+
+    .user_profile .card-footer th,
+    .user_profile .card-footer td {
+        width: 100% !important;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .user_profile .match-img {
+        height: 90% !important;
+    }
+
+
+}
+
+.user_profile .profile {
+    padding: 0px !important;
+}
+
+.user_profile .shadow {
+    padding: 10px 0px 0px !important;
+}
+
+.user_profile .getDynamicData {
+    display: none;
+}
+
+.user_profile #table,
+.user_profile th,
+.user_profile td {
+    border: 1px solid #b7b7b7;
+    ;
+    border-collapse: collapse
+}
+
+.user_profile #table th,
+.user_profile #table td {
+    padding: 7px 5px;
+    font-size: 14px;
+}
+
+.user_profile .match-img {
+    width: 100%;
+    height: 100%;
+}
+
+.text-pink {
+    color: #ff2fa8 !important;
+}
+
+.bg-pink {
+    background-color: #ff2fa8 !important;
+}
+
+.form-group {
+    margin-bottom: 0rem !important;
+}
+
+.modal-header {
+    padding: 5px 15px !important;
+}
+
+.modal-footer {
+    padding: 2px 15px !important;
+}
+
+.row {
+    margin-right: 0px !important;
+    margin-left: 0 !important;
+}
+
+.well-box {
+    /*box-shadow: 0px 0px 5px 0px #000 !important;*/
+    /* padding: 30px 0px !important; */
+    border-radius: 20px;
+    border: 1px solid #e91a7f;
+}
+
+.well-box .card-header {
+    background-color: transparent;
+    display: block !important;
+}
+
+.well-box .card-header .price-title {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font: x-large;
+    text-align: center;
+}
+
+.w-70 {
+    width: 70% !important;
+}
+
+.w-30 {
+    width: 30% !important;
+}
+
+.membership_plan .table>tbody>tr>td,
+.membership_plan .table>tbody>tr>th,
+.membership_plan .table>tfoot>tr>td,
+.membership_plan .table>tfoot>tr>th,
+.membership_plan .table>thead>tr>td,
+.membership_plan .table>thead>tr>th {
+    padding: 2px 10px !important;
+}
+
+.inbox_data .profile {
+    padding: 15px 2px !important;
+}
+
+.form-control {
+
+    border: 1px solid #ff00f2 !important;
+}
