@@ -33,7 +33,7 @@ if (isset($_SESSION['admin_id'])) {
     <!-- Profil card -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary text-center">Inquiry</h6>
+        <h4 class="m-0 font-weight-bold text-primary">Inquiry</h4>
       </div>
       <div class="card-body">
         <div class="row">

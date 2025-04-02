@@ -1,5 +1,4 @@
 <?php
-session_start();
 require("./db_connection.php");
 require("./navbar.php");
 
@@ -27,6 +26,11 @@ if (isset($_POST['registermember'])) {
     $date_of_brith = $_POST['date_of_brith'];
     $birth_time = $_POST['birth_time'];
     $language = $_POST['language'];
+    $gotra_devak = $_POST['gotra_devak'];
+    $mangal = $_POST['mangal'];
+    $lens = $_POST['lens'];
+    $physical_disa = $_POST['physical_disa'];
+    $complexion = $_POST['complexion'];
     $diet = $_POST['diet'];
     $liveWithFamily = $_POST['live_family'];
     $marital_status = $_POST['marital_status'];
@@ -34,15 +38,8 @@ if (isset($_POST['registermember'])) {
     $blood_group = $_POST['blood_group'];
     $zodiac = $_POST['zodiac'];
     $religion = $_POST['religion'];
-    $caste = "";
-    if ($_POST['caste2'] != "" || $_POST['caste2'] != null) {
-        $caste = $_POST['caste2'];
-    } elseif ($religion == "Other") {
-        $caste = $_POST['caste1'];
-    } else {
-        $caste = $_POST['caste'];
-    }
-
+    $caste = $_POST['caste'];
+    $sub_com = $_POST['sub_com'];
     // $sub_cast = $_POST['sub_cast'];
     $intercaste = $_POST['intercaste'];
     $education = $_POST['education'];
@@ -115,7 +112,7 @@ if (isset($_POST['registermember'])) {
 
             move_uploaded_file($tempname1, $folder1);
             //   move_uploaded_file($data, $image_name);
-            $sql1 = "INSERT INTO `user_regiter`(`profile_for`,`profile_creater_name`,`creater_mobile`,`member_id`,`name`, `email`, `phone`, `whatsapp_no`, `password`, `country`, `state`, `city`, `address`, `perma_address`, `marStat`, `rashi`, `lang`, `diet`, `height`, `religion`, `sub-com`, `community-checkbox`, `HighEdu`, `edu_degree`, `prof`, `working_city`, `income`, `yes/no`, `bGrp`, `bDate`, `age`, `gender`, `bTime`, `bLocation`, `term_and_cond`, `filename`, `adhar_pan_voter_image`, `OTP`,`status`) VALUES ('$profile_for','$profile_creater_name','$creater_mobile_no','$user_srno','$fullname','$email','$mobile','$whatsapp','$inputPassword','$country','$state','$city','$current_address','$permanent_address','$marital_status','$zodiac','$language','$diet','$height','$religion','$caste','$intercaste','$education','$education_detail','$profession','$working_city','$income','$liveWithFamily','$blood_group','$date_of_brith','$age','$gender','$birth_time','$current_address','$Accept','$userimg','$filename1','$otp',1)";
+            $sql1 = "INSERT INTO `user_regiter`(`profile_for`,`profile_creater_name`,`creater_mobile`,`member_id`,`name`, `email`, `phone`, `whatsapp_no`, `password`, `country`, `state`, `city`, `address`, `perma_address`, `marStat`, `rashi`, `lang`, `gotra_devak`, `mangal`, `lens`, `physical_disa`, `complexion`, `diet`, `height`, `religion`, `caste`, `sub-com`, `community-checkbox`, `HighEdu`, `edu_degree`, `prof`, `working_city`, `income`, `yes/no`, `bGrp`, `bDate`, `age`, `gender`, `bTime`, `bLocation`, `term_and_cond`, `filename`, `adhar_pan_voter_image`, `OTP`,`status`) VALUES ('$profile_for','$profile_creater_name','$creater_mobile_no','$user_srno','$fullname','$email','$mobile','$whatsapp','$inputPassword','$country','$state','$city','$current_address','$permanent_address','$marital_status','$zodiac','$language','$gotra_devak','$mangal','$lens','$physical_disa','$complexion','$diet','$height','$religion','$caste','$sub_com','$intercaste','$education','$education_detail','$profession','$working_city','$income','$liveWithFamily','$blood_group','$date_of_brith','$age','$gender','$birth_time','$current_address','$Accept','$userimg','$filename1','$otp',0)";
             if (mysqli_query($conn, $sql1)) {
                 $lastId = mysqli_insert_id($conn);
                 if (move_uploaded_file($data, $image_name)) {
@@ -129,7 +126,7 @@ if (isset($_POST['registermember'])) {
         } else {
             move_uploaded_file($tempname1, $folder1);
             // move_uploaded_file($data, $image_name);
-            $sql1 = "INSERT INTO `user_regiter`(`profile_for`,`profile_creater_name`,`creater_mobile`,`member_id`,`name`, `email`, `phone`, `whatsapp_no`, `password`, `country`, `state`, `city`, `address`, `perma_address`, `marStat`, `rashi`, `lang`, `diet`, `height`, `religion`, `sub-com`, `community-checkbox`, `HighEdu`, `edu_degree`, `prof`,  `income`, `yes/no`, `bGrp`, `bDate`, `age`, `gender`, `bTime`, `bLocation`, `term_and_cond`, `filename`, `adhar_pan_voter_image`, `OTP`, `status`) VALUES ('$profile_for','$profile_creater_name','$creater_mobile_no','$user_srno','$fullname','$email','$mobile','$whatsapp','$inputPassword','$country','$state','$city','$current_address','$permanent_address','$marital_status','$zodiac','$language','$diet','$height','$religion','$caste','$intercaste','$education','$education_detail','$profession','$income','$liveWithFamily','$blood_group','$date_of_brith','$age','$gender','$birth_time','$current_address','$Accept','$img','$filename1','$otp',1)";
+            $sql1 = "INSERT INTO `user_regiter`(`profile_for`,`profile_creater_name`,`creater_mobile`,`member_id`,`name`, `email`, `phone`, `whatsapp_no`, `password`, `country`, `state`, `city`, `address`, `perma_address`, `marStat`, `rashi`, `lang`, `gotra_devak`, `mangal`, `lens`, `physical_disa`, `complexion`, `diet`, `height`, `religion`, `caste`, `sub-com`, `community-checkbox`, `HighEdu`, `edu_degree`, `prof`,  `income`, `yes/no`, `bGrp`, `bDate`, `age`, `gender`, `bTime`, `bLocation`, `term_and_cond`, `filename`, `adhar_pan_voter_image`, `OTP`, `status`) VALUES ('$profile_for','$profile_creater_name','$creater_mobile_no','$user_srno','$fullname','$email','$mobile','$whatsapp','$inputPassword','$country','$state','$city','$current_address','$permanent_address','$marital_status','$zodiac','$language','$gotra_devak','$mangal','$lens','$physical_disa','$complexion','$diet','$height','$religion','$caste','$sub_com','$intercaste','$education','$education_detail','$profession','$income','$liveWithFamily','$blood_group','$date_of_brith','$age','$gender','$birth_time','$current_address','$Accept','$img','$filename1','$otp',0)";
             //               var_dump($sql1);
             // die();
             if (mysqli_query($conn, $sql1)) {
@@ -171,18 +168,20 @@ if (isset($_POST['registermember'])) {
         <div class="step-circle">1</div>
         <div class="step-circle">2</div>
         <div class="step-circle">3</div>
+        <!-- 
         <div class="step-circle">4</div>
         <div class="step-circle">5</div>
         <div class="step-circle">6</div>
+        <div class="step-circle">7</div> -->
         <!-- onclick="displayStep(1)"
-onclick="displayStep(2)"
-onclick="displayStep(3)"
-onclick="displayStep(4)"
-onclick="displayStep(5)"
-onclick="displayStep(6)" -->
+            onclick="displayStep(2)"
+            onclick="displayStep(3)"
+            onclick="displayStep(4)"
+            onclick="displayStep(5)"
+            onclick="displayStep(6)" -->
     </div>
 
-    <form id="multi-step-form">
+    <form id="multi-step-form" action="" method="post" enctype="multipart/form-data">
         <div class="step step-1">
             <!-- Step 1 form fields here -->
             <div class="px-lg-5 px-3 py-5 DataCard  my-3">
@@ -204,20 +203,16 @@ onclick="displayStep(6)" -->
                     </div>
                     <div class="form-group col-lg-4 col-12">
                         <label>Name <span style="color:red">&nbsp;*</span></label>
-                        <input name="profile_creater_name" id="profile_creater_name" type="text" class="form-control" placeholder="Name" required>
+                        <input name="profile_creater_name" id="profile_creater_name" type="text" class="form-control" oninput="validateName(this)" placeholder="Name" required>
                     </div>
                     <div class="form-group col-lg-4 col-12">
                         <label>Mobile Number <span style="color:red">&nbsp;*</span></label>
-                        <input type="text" name="creater_mobile_no" id="creater_mobile_no" class="form-control" onchange="visibleButton()" placeholder="Mobile" required>
+                        <input type="number" name="creater_mobile_no" id="creater_mobile_no" class="form-control" onchange="visibleButton()" placeholder="Mobile" required>
                     </div>
 
                 </div>
             </div>
-            <button type="button" class="btn btn-primary next-step">Next</button>
-        </div>
-
-        <div class="step step-2">
-            <!-- Step 2 form fields here -->
+            <!-- Step 1 form fields here -->
             <div class="px-lg-5 px-3 py-5 DataCard my-3">
                 <div class="registration" style="margin:10px;">
                     <h5 class="heading">Basic Information</h5>
@@ -225,17 +220,27 @@ onclick="displayStep(6)" -->
                     <div class="form-group row">
                         <div class="col-sm-4" style="padding-top:10px;">
                             First Name <span style="color:red">&nbsp;*</span>
-                            <input value="" id="first_name" class="form-control" type="text" name="first_name" placeholder="First Name" required="">
+                            <input id="first_name" class="form-control" type="text" name="first_name" oninput="validateName(this)" placeholder="First Name" required="">
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Middle Name <span style="color:red">&nbsp;*</span>
-                            <input value="" id="father_name" class="form-control" type="text" name="father_name" placeholder="Middle Name" required="">
+                            <input id="father_name" class="form-control" type="text" name="father_name" oninput="validateName(this)" placeholder="Middle Name" required="">
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Last Name <span style="color:red">&nbsp;*</span>
-                            <input value="" id="last_name" class="form-control" type="text" name="last_name" placeholder="Last Name" required="">
+                            <input id="last_name" class="form-control" type="text" name="last_name" oninput="validateName(this)" placeholder="Last Name" required="">
                         </div>
                     </div>
+
+                    <script>
+                        function validateName(input) {
+                            const namePattern = /^[A-Za-z\s]+$/; // Allow only letters and spaces
+                            if (!namePattern.test(input.value)) {
+                                alert("Please enter only characters");
+                                input.value = input.value.replace(/[^A-Za-z\s]/g, ""); // Remove invalid characters
+                            }
+                        }
+                    </script>
 
                     <div class="form-group row">
 
@@ -250,7 +255,7 @@ onclick="displayStep(6)" -->
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Date of Birth
-                            <input type="date" class="form-control" name="date_of_brith" id="date_of_brith" value="" required="" onchange="getAge(this.value)">
+                            <input type="date" class="form-control" name="date_of_brith" id="date_of_brith" required="" onchange="getAge(this.value)">
                             <input class="form-control" type="hidden" name="age" id="age">
                         </div>
                         <div class="col-md-4" style="padding-top:10px;">
@@ -263,11 +268,10 @@ onclick="displayStep(6)" -->
                             Marital Status
                             <select name="marital_status" id="marital_status" class="form-control form-select">
                                 <option value="">Select Marital Status</option>
-                                <option value="Unmarried">Unmarried</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Widowed">Widowed </option>
-                                <option value="Awaiting Divorce">Awaiting Divorce</option>
-                                <option value="Separated">Separated</option>
+                                <option value="Unmarried Boy">Unmarried Boy</option>
+                                <option value="Unmarried Girl">Unmarried Girl</option>
+                                <option value="Divorcee Boy / Widower">Divorcee Boy / Widower</option>
+                                <option value="Divorcee Girl / Widow">Divorcee Girl / Widow </option>
                             </select>
                         </div>
 
@@ -398,16 +402,8 @@ onclick="displayStep(6)" -->
                                 <option value="Don`t know">Don't know </option>
                             </select>
                         </div>
-                        <!--<div class="col-md-4" style="padding-top:10px;">-->
-                        <!--    <div class="form-group">-->
-                        <!--        <label>Date</label>-->
-                        <!--        <input id="reg.date" name="" class="form-control" type="date"/>-->
-
-                        <!--    </div>-->
-
-                        <!--</div>-->
                         <div class="col-md-4" style="padding-top:10px;">
-                            <small style="color:red;">Upload Aadhar/ Pan/ Voter/ Emp Cards<span>*</span></small>
+                            <small style="color:red;">Upload Aadhar/ Pan/ Voter/ Biodata<span>*</span></small>
                             <input type="file" class="form-control" id="apvi_image" name="apvi_image" accept="image/*" required>
                         </div>
                         <div class="col-md-4" style="padding-top:10px;">
@@ -500,15 +496,60 @@ onclick="displayStep(6)" -->
                                 text-align: center;
                             }
                         </style>
+                        <div class="col-md-3" style="padding-top:10px;">
+                            Gotra & Devak
+                            <input id="gotra_devak" min="5" max="30" class="form-control" type="text" name="gotra_devak" required="" placeholder="GOTRA & DEVAK">
+                        </div>
+                        <div class="col-sm-2">
+                            <div style="padding-top:10px;">
+                                Mangal
+                                <select name="mangal" class="form-control select form-select" id="mangal">
+                                    <option value="YES">YES</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <div style="padding-top:10px;">
+                                Lens
+                                <select name="lens" class="form-control select form-select" id="lens">
+                                    <option value="">Select One</option>
+                                    <option value="NO">NO</option>
+                                    <option value="YES">YES</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div style="padding-top:10px;">
+                                Physical Disabilities
+                                <select name="physical_disa" class="form-control select form-select" id="physical_disa">
+                                    <option value="">Select One</option>
+                                    <option value="NO">NO</option>
+                                    <option value="YES">YES</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <div style="padding-top:10px;">
+                                Complexion
+                                <select name="complexion" class="form-control select form-select" id="complexion">
+                                    <option value="">Select One</option>
+                                    <option value="Fair">Fair</option>
+                                    <option value="Gora">Gora</option>
+                                    <option value="Sawala">Sawala</option>
+                                    <option value="Gavhal">Gavhal</option>
+                                    <option value="Nimgora">Nimgora</option>
+                                </select>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary prev-step">Previous</button>
-            <button type="button" class="btn btn-primary next-step">Next</button>
-        </div>
-
-        <div class="step step-3">
-            <!-- Step 3 form fields here -->
+            <!-- Step 1 form fields here -->
             <div class="px-lg-5 px-3 py-5 DataCard my-3">
                 <div class="religious_information" style="margin:10px;">
                     <h5 class="heading">Religious Information</h5>
@@ -536,9 +577,10 @@ onclick="displayStep(6)" -->
                             <select name="caste" id="caste" class="form-control form-select" onchange="OtherCaste(this.value);getSubCaste(this.value);">
                             </select>
                         </div>
-                        <div class="col-sm-4 OtherCaste" style="padding-top:10px;display:none;">
-                            Caste <span style="color:red">&nbsp;*</span>
-                            <input type="text" name="caste2" id="caste2" class="form-control" placeholder="Enter Caste">
+                        <div class="col-sm-4" style="padding-top:10px; display:none">
+                            <label>Subcaste <span style="color:red">&nbsp;*</span></label>
+                            <input type="text" name="sub-com" id="sub-com" class="form-control" placeholder="Enter Caste" style="display:none">
+
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Intercaste Accepted
@@ -574,11 +616,10 @@ onclick="displayStep(6)" -->
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary prev-step">Previous</button>
-            <button type="button" class="btn btn-primary next-step">Next</button>
+            <button type="button" onclick="validateForm()" class="btn btn-primary next-step">Next</button>
         </div>
-        <div class="step step-4">
-            <!-- Step 3 form fields here -->
+        <div class="step step-2">
+            <!-- Step 2 form fields here -->
             <div class="px-lg-5 px-3 py-5 DataCard my-3">
                 <div class="education_information" style="margin:10px;">
                     <h5 class="heading">Education Information</h5>
@@ -717,17 +758,12 @@ onclick="displayStep(6)" -->
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Working City
-                            <input value="" type="text" class="form-control" name="working_city" id="working_city">
-
+                            <input type="text" class="form-control" name="working_city" id="working_city">
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary prev-step">Previous</button>
-            <button type="button" class="btn btn-primary next-step">Next</button>
-        </div>
-        <div class="step step-5">
-            <!-- Step 3 form fields here -->
+            <!-- Step 2 form fields here -->
             <div class="px-lg-5 px-3 py-5 DataCard my-3">
                 <div class="location_information" style="margin:10px;">
                     <h5 class="heading">Location Information</h5>
@@ -792,11 +828,8 @@ onclick="displayStep(6)" -->
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary prev-step">Previous</button>
-            <button type="button" class="btn btn-primary next-step">Next</button>
-        </div>
-        <div class="step step-6">
-            <!-- Step 3 form fields here -->
+
+            <!-- Step 2 form fields here -->
             <div class="px-lg-5 px-3 py-5 DataCard my-3">
                 <div class="other_information" style="margin:10px;">
                     <h5 class="heading">Contact Information</h5>
@@ -804,16 +837,16 @@ onclick="displayStep(6)" -->
                     <div class="form-group row">
                         <div class="col-sm-4" style="padding-top:10px;">
                             Email<span style="color:red">&nbsp;*</span>
-                            <input value="" type="email" class="form-control" name="email" id="inputEmailAddress" required="" oninvalid="this.setCustomValidity('Enter Email Address Here')" oninput="this.setCustomValidity('')">
+                            <input type="email" class="form-control" name="email" id="inputEmailAddress" required="" oninvalid="this.setCustomValidity('Enter Email Address Here')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Mobile <span style="color:red">&nbsp;*</span>
-                            <input value="" type="text" class="form-control" name="mobile" id="inputMobile" required="" maxlength="10" oninvalid="this.setCustomValidity('Enter Mobile Number Here')" oninput="this.setCustomValidity('')">
+                            <input type="number" class="form-control" name="mobile" id="inputMobile" required="" maxlength="10" oninvalid="this.setCustomValidity('Enter Mobile Number Here')" oninput="this.setCustomValidity('')">
                         </div>
                         <div class="col-sm-4" style="padding-top:10px;">
                             Whatsapp Number <span style="color:red">&nbsp;*</span>
 
-                            <input value="" type="text" maxlength="10" class="form-control" name="whatsapp" id="whatsapp">
+                            <input type="number" maxlength="10" class="form-control" name="whatsapp" id="whatsapp">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -833,6 +866,83 @@ onclick="displayStep(6)" -->
                     </div>
                     <input name="registermember" value="registermember" type="hidden">
 
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary prev-step">Previous</button>
+            <button type="button" class="btn btn-primary next-step">Next</button>
+        </div>
+        <div class="step step-3">
+            <!-- Step 3 form fields here -->
+            <div class="px-lg-5 px-3 py-5 DataCard my-3">
+                <div class="other_information" style="margin:10px;">
+                    <h5 class="heading">Payment Information</h5>
+                    <hr>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <img src="./img/QrCode.jpg" width="100%" alt="" srcset="">
+                        </div>
+                        <div class="col-lg-6">
+                            <p class="text-dark fs-5 fw-bold">Please inform us of the Transaction ID, Date, Amount, and your Bank Name & Branch via email, phone, or WhatsApp. Additionally, share a screenshot or photo of the payment receipt by sending it to our email ID once the transfer is completed.</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Rules, T & C
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Rules, Terms and Conditions</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body px-4 ">
+                                    <p class=""><i class="fa fa-arrow-right text-success"></i> फक्त मराठा समाजासाठी कार्यरत असल्यास असलेली विश्वसनीय विवाह संस्था </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>विवाह संस्थेत मराठा समाजाच्या वधूवरांची येते नोंदणी केली जाते </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>नोंदणी फॉर्म भरताना सर्व माहिती ही सत्य भरावी </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>पालकांनी मुला / मुलींचा बायोडेटा पाहून त्यांची शैक्षणिक पात्रता, अनुरूपता, अपेक्षा लक्षात घेऊन त्याप्रमाणे स्थळी घ्यावीत.
+                                    </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>आपण घेतलेल्या स्थळांची माहिती आपले नातेवाईक मित्रमंडळी मार्फत करून घ्यावी भविष्यात काही प्रश्न उपस्थित झाल्यास त्यास संस्था जबाबदार राहणार नाही
+                                    </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>नाव नोंदणी नंतर विवाह जमेलच किंवा अमुक दिवसात विवाह जमेलच याची खात्री किंवा हमी संस्था देऊ शकत नाही
+                                    </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>एकदा भरलेली फी. कोणत्याही सबबी खाली परत मिळणार नाही
+                                    </p>
+                                    <p><i class="fa fa-arrow-right text-success"></i>संस्थेकडून नेलेल्या माहितीचा कोणीही गैरवापर करता कामा नये. तसे आढळल्यास संबधित सभासदाचे सभासदत्व त्वरित रद्द करण्यात येईल
+                                    </p>
+                                    <p class="text-primary"><strong>संस्थेची फिस खालीलप्रमाणे
+                                        </strong></p>
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th class="text-dark">1 वर्षांकरिता :</th>
+                                                <td class="text-dark">2000</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-dark">6 महिन्याकरिता
+                                                    :</th>
+                                                <td class="text-dark">1200</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="fw-bold">
+                                        आमच्या बँकेच्या खात्यावर रोख QR Code ने जमा करता येईल
+                                    </p>
+                                    <p class="fw-bold text-primary">Name : Rushikesh Rajkumar Gunjal</p>
+                                    <p class="fw-bold text-primary">Google Pay No. : 9881749829</p>
+                                    <p class="fw-bold text-primary">Account No. : 62380492188</p>
+                                    <p class="fw-bold text-primary">IFSC Code : SBIN0020997</p>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <button type="button" class="btn btn-primary prev-step">Previous</button>
@@ -939,7 +1049,7 @@ require("./footer.php");
     var updateProgressBar;
 
     function displayStep(stepNumber) {
-        if (stepNumber >= 1 && stepNumber <= 6) {
+        if (stepNumber >= 1 && stepNumber <= 3) {
             $(".step-" + currentStep).hide();
             $(".step-" + stepNumber).show();
             currentStep = stepNumber;
@@ -951,7 +1061,7 @@ require("./footer.php");
         $('#multi-step-form').find('.step').slice(1).hide();
 
         $(".next-step").click(function() {
-            if (currentStep < 6) {
+            if (currentStep < 3) {
                 $(".step-" + currentStep).addClass("animate__animated animate__fadeOutLeft");
                 currentStep++;
                 setTimeout(function() {
@@ -975,7 +1085,7 @@ require("./footer.php");
         });
 
         updateProgressBar = function() {
-            var progressPercentage = ((currentStep - 1) / 5) * 100;
+            var progressPercentage = ((currentStep - 1) / 2) * 100;
             $(".progress-bar").css("width", progressPercentage + "%");
         }
     });
@@ -1013,6 +1123,7 @@ require("./footer.php");
 </script>
 <script>
     function getSubCaste(id) {
+        $('#sub-com').val(id)
         $.ajax({
             url: "get_data_from_database.php",
             method: "post",
@@ -1120,3 +1231,65 @@ require("./footer.php");
         }
     }
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const togglePassword = document.getElementById("eye_icons");
+        const passwordField = document.getElementById("pass_log_id");
+
+        togglePassword.addEventListener("click", function() {
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                this.classList.remove("fa-eye-slash");
+                this.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                this.classList.remove("fa-eye");
+                this.classList.add("fa-eye-slash");
+            }
+        });
+    });
+</script>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+
+        // Clear previous error messages
+        document.querySelectorAll('.error-message').forEach(el => el.innerHTML = '');
+
+        // Get form values
+        let profileFor = document.getElementById("profile_for").value;
+        let profileName = document.getElementById("profile_creater_name").value.trim();
+        let mobileNo = document.getElementById("creater_mobile_no").value.trim();
+
+        // Validation conditions
+        if (profileFor === "") {
+            document.getElementById("profile_for_error").innerHTML = "Please select a profile.";
+            isValid = false;
+        }
+
+        if (profileName === "") {
+            document.getElementById("profile_creater_name_error").innerHTML = "Name is required.";
+            isValid = false;
+        }
+
+        if (mobileNo === "" || mobileNo.length !== 10) {
+            document.getElementById("creater_mobile_no_error").innerHTML = "Enter a valid 10-digit mobile number.";
+            isValid = false;
+        }
+
+        if (isValid) {
+            alert("Form is valid. Proceeding to next step...");
+            // Redirect or submit the form
+            // document.getElementById("matrimonyForm").submit();
+        }
+    }
+</script>
+
+<style>
+    .error-message {
+        color: red;
+        font-size: 14px;
+    }
+</style>

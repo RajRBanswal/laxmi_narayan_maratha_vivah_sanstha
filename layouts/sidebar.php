@@ -1,3 +1,10 @@
+<?php
+$getrequests = mysqli_query($conn, "SELECT * FROM `requests` WHERE `sent_id` = '$_SESSION[userId]'");
+$totalRequest = mysqli_num_rows($getrequests);
+
+$sentrequests = mysqli_query($conn, "SELECT * FROM `requests` WHERE `user_id` = '$_SESSION[userId]'");
+$totalSentRequest = mysqli_num_rows($sentrequests);
+?>
 <div class="app-sidebar sidebar-shadow">
     <div class="app-header__logo">
         <h1 class="logo-src">
@@ -53,34 +60,34 @@
                         Shortlist
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="./membership_plan.php" class="<?php echo $actual_link === '/LaxmiNarayanMarathaVivahSanstha/membership_plan.php' ? 'mm-active' : '' ?>">
                         <i class="metismenu-icon fas fa-money-check text-info pe-7s-rocket"></i>
                         Membership Plan
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="./plan_purchase_history.php" class="<?php echo $actual_link === '/LaxmiNarayanMarathaVivahSanstha/plan_purchase_history.php' ? 'mm-active' : '' ?>">
                         <i class="metismenu-icon fas fa-clock text-info pe-7s-rocket"></i>
                         Plan Purchase History
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="./show_all_profile.php" class="<?php echo $actual_link === '/LaxmiNarayanMarathaVivahSanstha/show_all_profile.php' ? 'mm-active' : '' ?>">
                         <i class="metismenu-icon fas fa-users text-primary pe-7s-rocket"></i>
                         All Profile
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="./inbox.php" class="<?php echo $actual_link === '/LaxmiNarayanMarathaVivahSanstha/inbox.php' ? 'mm-active' : '' ?>">
                         <i class="metismenu-icon fas fa-inbox text-success pe-7s-rocket"></i>
-                        Inbox
+                        Inbox <div class="notification_dot"><?php echo $totalRequest; ?></div>
                     </a>
                 </li>
                 <li>
                     <a href="./outbox.php" class="<?php echo $actual_link === '/LaxmiNarayanMarathaVivahSanstha/outbox.php' ? 'mm-active' : '' ?>">
                         <i class="metismenu-icon fa-solid fa-box text-danger pe-7s-rocket"></i>
-                        Outbox
+                        Outbox <div class="notification_dot"><?php echo $totalSentRequest; ?></div>
                     </a>
                 </li>
 

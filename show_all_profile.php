@@ -232,7 +232,7 @@ if (isset($_SESSION['userId'])) {
                                     <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8" style="overflow:auto">
                                         <table class="" id="table" style="width:100%">
                                             <tbody>
-                                               
+
 
                                                 <tr>
                                                     <th>Member ID</th>
@@ -533,7 +533,7 @@ if (isset($_SESSION['userId'])) {
                                         <div class="modal-content">
                                             <form action="" method="post">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="example">Confirm To Delete?</h5>
+                                                    <h5 class="modal-title">Confirm To Delete?</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -553,7 +553,7 @@ if (isset($_SESSION['userId'])) {
                                         <div class="modal-content">
                                             <form action="" method="post">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="example">Confirm To send?</h5>
+                                                    <h5 class="modal-title">Confirm To send?</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -584,25 +584,6 @@ if (isset($_SESSION['userId'])) {
                                     <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8" style="overflow:auto">
                                         <table class="" id="table" style="width:100%">
                                             <tbody>
-                                                <tr>
-                                                    <th style="font-size:16px;" colspan="4" class="bold text-uppercase">
-                                                        <?php $myvalue = $row['name'];;
-                                                        $arr = explode(' ', trim($myvalue));
-                                                        if ($arr[0] == "Demo" || $arr[0] == "demo") {
-                                                            echo $arr[1];
-                                                        } else {
-                                                            echo $arr[0];
-                                                        } ?>
-                                                        <label class="" style="color: #14a94a;font-size: 12px;font-weight: 800;text-transform: capitalize;">
-                                                            <?php if ($row['verified'] == 1) {
-                                                                echo "Verified <img src='./images/verified2.png' width='20'/>";
-                                                            } else {
-                                                                echo "<span style='color: #f3041b;'>Not Verified</span>";
-                                                            } ?>
-                                                        </label>
-                                                    </th>
-
-                                                </tr>
 
                                                 <tr>
                                                     <th>Member ID</th>
@@ -773,7 +754,7 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <form action="" method="post">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="example">Confirm To Delete?</h5>
+                                                <h5 class="modal-title">Confirm To Delete?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -793,7 +774,7 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <form action="" method="post">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="example">Confirm To send?</h5>
+                                                <h5 class="modal-title">Confirm To send?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">

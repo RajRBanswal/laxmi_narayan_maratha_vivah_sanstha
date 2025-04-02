@@ -18,7 +18,7 @@ if (isset($_POST['admin_Login'])) {
 ?>
         <script>
             alert('Admin Not Register');
-            // window.location.href = "admin_register.php";
+            window.location.href = "index.php";
         </script>
     <?php
     }

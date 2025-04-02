@@ -12,7 +12,7 @@ require("./navbar.php");
                 <div class="border-success p-3 bg-white" style="border-style: double;">
                     <img src="img/logo.png" class="img-fluid w-100" alt="">
                     <p class="text-primary text-center fw-bold mb-0 image_text">
-                        Laxmi Narayan <span style="color:#ff83cd">Maratha</span> <span class="text-success">Vivah Sanstha </span>
+                        Laxmi Narayan Maratha Vivah Sanstha
                     </p>
                 </div>
             </div>
@@ -20,17 +20,13 @@ require("./navbar.php");
                 <div class="wow fadeIn" data-wow-delay="0.3s">
                     <h5 class="text-uppercase text-dark fw-bold mb-4">About Us</h5>
                     <h1 class="text-primary fw-bold mb-0 image_text">
-                        Laxmi Narayan <span style="color:#ff83cd">Maratha</span> <span class="text-success">Vivah Sanstha </span>
+                        Laxmi Narayan Maratha Vivah Sanstha
                     </h1>
                     <p class="text-dark fs-6 mb-3">Laxmi Narayan Maratha Vivah Sanstha is a dedicated matrimonial platform committed to helping Maratha families find ideal life partners for their loved ones. We understand the importance of tradition, values, and compatibility in marriage and strive to connect individuals who share common cultural and family backgrounds.
                     </p>
                     <p class="text-dark fs-6 mb-3">At Laxmi Narayan Maratha Vivah Sanstha, we are dedicated to making the journey of finding a life partner an enjoyable and successful experience. Whether you are looking for a traditional or modern match, we are here to assist you every step of the way.</p>
 
-                    <div class="d-flex mt-4">
-                        <div class="d-flex align-items-center justify-content-center flex-shrink-0">
-                            <a href="./about.php" class="btn btn-info btn-info-outline-0 py-2 px-4">Read More</a>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>

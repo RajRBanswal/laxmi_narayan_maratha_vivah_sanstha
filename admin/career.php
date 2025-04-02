@@ -98,10 +98,9 @@ if (isset($_SESSION['admin_id'])) {
         <!-- Profil card -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary text-center">Career </h6>
+                <h4 class="m-0 font-weight-bold text-primary">Career </h4>
             </div>
             <div id="admin" class="card-body">
-
                 <nav>
                     <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
                         <li class="nav-item userTab" role="presentation">
@@ -641,7 +640,7 @@ if (isset($_SESSION['admin_id'])) {
         </div>
     </div>
 
-    
+
     <?php
     include 'panelFooter.php';
     ?>

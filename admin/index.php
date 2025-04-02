@@ -87,7 +87,7 @@ if (isset($_POST['sendLink'])) {
                             <div class="col-lg-6 d-none d-lg-block p-4">
                                 <img src="./img/logo.png" width="100%" class="login-img-name" alt="...">
                                 <h2 class="text-primary fw-bold mb-0">
-                                    लक्ष्मी नारायण <span style="color:#ff83cd">मराठा</span> <span class="text-success">विवाह संस्था </span>
+                                    लक्ष्मी नारायण मराठा विवाह संस्था 
                                 </h2>
                             </div>
                             <div class="col-lg-6 border">

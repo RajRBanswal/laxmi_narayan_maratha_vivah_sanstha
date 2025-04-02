@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $enteredOtp = $_POST['otp'];
 
     if (isset($_SESSION['otp']) && $enteredOtp == $_SESSION['otp']) {
-        $result = $conn->query("UPDATE `user_regiter` SET `OTP`='' WHERE `email`='$_SESSION[email]'");
+        $result = $conn->query("UPDATE `user_regiter` SET `OTP`='', `verified`=1 WHERE `email`='$_SESSION[email]'");
         unset($_SESSION['otp']); // Clear OTP after successful verification
 ?>
         <script>

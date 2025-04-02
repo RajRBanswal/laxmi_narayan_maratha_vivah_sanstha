@@ -36,7 +36,7 @@ if (isset($_POST['sign_up_button'])) {
 
         // Send email using mail()
         // if (mail($email, $subject, $message, $headers)) {
-        $result = mysqli_query($conn, "INSERT INTO `user_regiter`(`member_id`, `profile_for`, `profile_creater_name`, `creater_mobile`, `name`, `email`, `phone`, `password`, `OTP`) VALUES ('$uniqueCode','$creater','$name','$mobile','$name','$email','$mobile','$password','$otp')");
+        $result = mysqli_query($conn, "INSERT INTO `user_regiter`(`member_id`, `profile_for`, `profile_creater_name`, `creater_mobile`, `name`, `email`, `phone`, `password`, `OTP`, `status`) VALUES ('$uniqueCode','$creater','$name','$mobile','$name','$email','$mobile','$password','$otp',0)");
         if ($result) {
             // Store OTP in session for verification
             $_SESSION['otp'] = $otp;
@@ -58,7 +58,7 @@ if (isset($_POST['sign_in_button'])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
 
-    $result = mysqli_query($conn, "SELECT * FROM `user_regiter` WHERE `email`='$username' AND `password`='$password'");
+    $result = mysqli_query($conn, "SELECT * FROM `user_regiter` WHERE `email`='$username' OR `member_id`='$username' AND `password`='$password' AND `verified`=1 AND `deleted_profile`=0");
 
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);

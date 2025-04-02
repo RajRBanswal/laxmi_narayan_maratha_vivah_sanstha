@@ -126,7 +126,7 @@ h1, h2 {
     text-wrap: wrap;
     color: #ff0b99;
     line-height: 1.1;
-    letter-spacing: 3px;
+    letter-spacing: 0px;
 }
 
 .desc, .account {

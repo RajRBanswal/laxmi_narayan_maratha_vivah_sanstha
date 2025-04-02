@@ -10,6 +10,7 @@ $actual_link = $_SERVER['PHP_SELF'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="./img/logo.png" type="image/x-icon">
     <title>
         <?php if ($actual_link === "/realestate_property/user_profile.php") {
             echo "User Profile";
@@ -89,7 +90,6 @@ $actual_link = $_SERVER['PHP_SELF'];
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                            <a href="./" tabindex="0" class="dropdown-item">User Profile</a>
                                             <a href="./index.php" tabindex="0" class="dropdown-item">Home</a>
                                             <a href="./layouts/logout.php" tabindex="0" class="dropdown-item">Logout</a>
                                         </div>

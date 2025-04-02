@@ -112,11 +112,11 @@
 
 
 .navbar .navbar-nav .nav-link {
-    padding: 10px;
+    padding: 10px 8px;
     /* font-family: 'Petit Formal Script', cursive; */
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 400;
-    font-size: 15px;
+    font-weight: 500;
+    font-size: 16px;
     transition: .5s;
 }
 
@@ -154,8 +154,8 @@
 
 .navbar-light .navbar-brand p {
     letter-spacing: 0px;
-    line-height: 25px;
-    font-size: 18px;
+    line-height: 24px;
+    font-size: 24px;
     font-weight: 600 !important;
     font-family: AMS Aaditya Regular;
     /* letter-spacing: 3px;
@@ -172,9 +172,9 @@
     }
 
     .navbar-light .navbar-brand p {
-        letter-spacing: 3px;
+        /* letter-spacing: 3px; */
         line-height: 24px;
-        font-size: 18px;
+        font-size: 24px;
         font-weight: 600 !important;
         /* font-family: 'Great Vibes', cursive; */
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -199,7 +199,7 @@
 .carousel-caption {
     position: absolute;
     right: 0%;
-    top: 45%;
+    top: 50%;
     bottom: 1.25rem;
     left: 0%;
     width: 100%;
@@ -208,6 +208,13 @@
     padding-bottom: 1.25rem;
     color: #fff;
     text-align: center;
+}
+
+.carousel-caption h3 {
+    background: #00000069;
+    padding: 5px;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .carousel-caption .card {
@@ -260,13 +267,13 @@
     position: relative;
 }
 
-.story .story-timeline::before,
+/* .story .story-timeline::before, */
 .story .story-timeline::after {
     position: absolute;
     content: "";
     width: 15px;
     height: 15px;
-    background: var(--bs-secondary);
+    background: #d10073;
     border-radius: 10px;
     left: 50%;
     top: -7px;
@@ -278,13 +285,13 @@
     bottom: -7px;
 }
 
-.story .story-timeline .row::after {
+.story .story-timeline .bank-row::after {
     position: absolute;
     content: "\f004";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     font-size: 30px;
-    color: var(--bs-secondary);
+    color: #d10073;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -294,7 +301,7 @@
 
     .story .story-timeline::before,
     .story .story-timeline::after,
-    .story .story-timeline .row::after {
+    .story .story-timeline .bank-row::after {
         display: none;
     }
 }
@@ -732,19 +739,21 @@
 }
 
 .about_us .image_text {
-    letter-spacing: 3px;
+    /* letter-spacing: 3px; */
     line-height: 30px;
+    text-transform: uppercase;
     font-size: 25px !important;
     font-weight: 600 !important;
-    font-family: 'Great Vibes', cursive;
+    /* font-family: 'Great Vibes', cursive; */
 }
 
 .footer-item .image_text {
-    letter-spacing: 3px;
+    /* letter-spacing: 3px; */
     line-height: 25px;
+    text-transform: uppercase;
     font-size: 18px !important;
     font-weight: 600 !important;
-    font-family: 'Great Vibes', cursive;
+    /* font-family: 'Great Vibes', cursive; */
 }
 
 .card-footer {
@@ -885,6 +894,11 @@
 
 .image_propra img {
     width: 200px;
+    border-style: double;
+    border-color: #fff;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 @media screen and (max-width:768px) {
@@ -927,4 +941,139 @@
     margin: 0 0 15px 0 !important;
     border-top-left-radius: 25px !important;
     border-bottom-right-radius: 25px !important;
+}
+
+.user_profile_details p {
+    color: #3a3a3a
+}
+
+.website-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+body {
+    height: 100vh;
+}
+
+/* Styles for website counter container */
+.website-counter {
+    background-color: #ff4957;
+    height: 50px;
+    width: 150px;
+    color: white;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 25px;
+    margin-top: 10px;
+    margin: auto;
+}
+
+/* Styles for reset button */
+#reset {
+    margin-top: 20px;
+    background-color: #008cba;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 20px;
+    color: white;
+    border: 0;
+}
+
+.laxmi_narayan_section {
+    background-image: url(../img/wedding-date-bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.laxmi_narayan_section::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    background-color: #ff08e393;
+}
+
+.laxmi_narayan_section .container {
+    position: relative;
+}
+
+.laxmi_narayan_section h2 {
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.headset_icon {
+    position: fixed;
+    top: 15%;
+    right: 0;
+    background-color: #007bff;
+    height: 40px;
+    width: 40px;
+    padding: 6px;
+    text-align: center;
+    z-index: 99999;
+}
+
+.headset_icon i {
+    font-size: 25px;
+}
+
+.headset_icon span {
+    position: absolute;
+    right: -200px;
+    white-space: nowrap;
+    background-color: #ff33aa;
+    height: 40px;
+    padding: 8px;
+    top: -1px;
+    margin-left: 7px;
+}
+
+.headset_icon:hover span {
+    animation: showMobile 1s linear;
+    right: 50px;
+}
+
+@keyframes showMobile {
+    0% {
+        top: -1px;
+        right: -200px;
+    }
+
+    100% {
+        top: -1px;
+        right: 0px;
+    }
+}
+
+.india_leading .card {
+    border-color: #ff33aa;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.india_leading .card .il_icon {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #ff33aa;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.india_leading .card p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 13px;
 }

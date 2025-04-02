@@ -5,6 +5,7 @@ if (isset($_SESSION['userId'])) {
     require("./layouts/header.php");
     require("./layouts/sidebar.php");
     $u_id = $_SESSION['userId'];
+    $user_id  = $_SESSION['userId'];
 
     $ur = "";
     $ua = "";
@@ -22,13 +23,11 @@ if (isset($_SESSION['userId'])) {
         $visible_prof = $row['visible_prof'];
     }
     if (isset($_POST['send_btn'])) {
-        // $usrid = $_POST['usr_id'];
         $send_id = $_POST['send_id'];
 
         $req = mysqli_query($conn, "SELECT * FROM `requests` where `user_id` = '$u_id' AND `sent_id` = '$send_id'");
         $reqCount = mysqli_num_rows($req);
         if ($reqCount < 1) {
-
             $sql2 = mysqli_query($conn, "INSERT INTO `requests`(`user_id`, `sent_id`) VALUES ('$u_id','$send_id')");
             if ($sql2) {
 ?>
@@ -41,18 +40,6 @@ if (isset($_SESSION['userId'])) {
             ?>
             <script>
                 alert("You already sent request to this person!");
-            </script>
-        <?php
-        }
-    }
-    if (isset($_POST['delete_btn'])) {
-        $del = $_POST['delete_id'];
-        $sql = mysqli_query($conn, "DELETE FROM `requests` WHERE `user_id` =  '$u_id' AND `sent_id` = '$del' ");
-        if ($sql) {
-            // print_r($del);
-        ?>
-            <script>
-                alert("request deleted successfuly");
             </script>
     <?php
         }
@@ -110,8 +97,6 @@ if (isset($_SESSION['userId'])) {
                                 <div class="row vendor-list-block  shadow card">
                                     <!-- match list block -->
                                     <div class="col-md-4 col-xs-4 text-center col-sm-4 col-lg-4">
-                                        <!-- <div class="<?php // echo $row['label'];
-                                                            ?>"></div> -->
                                         <img src="user_image/<?php echo $row['filename']; ?>" width="100%" alt="wedding venue" class="match-img py-0">
                                     </div>
                                     <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8" style="overflow:auto">
@@ -178,12 +163,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -205,97 +184,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -305,16 +244,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -399,12 +338,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -426,97 +359,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -526,16 +419,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -650,12 +543,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -677,97 +564,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title" id="exampleModalLabel">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -777,16 +624,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -870,12 +717,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -897,97 +738,56 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title" id="exampleModalLabel">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -997,16 +797,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1124,12 +924,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -1151,97 +945,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title" id="exampleModalLabel">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1251,16 +1005,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1346,12 +1100,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -1373,97 +1121,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title" id="exampleModalLabel">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1473,16 +1181,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1597,12 +1305,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -1624,97 +1326,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title" id="exampleModalLabel">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1724,16 +1386,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1815,12 +1477,6 @@ if (isset($_SESSION['userId'])) {
                                                         <a type="button" data-bs-toggle="modal" data-bs-target="#send_confirm<?php echo $row['id']; ?>" data-whatever="@send" href="" name="senReq" id="senReq"> Send Request <i class="fa-solid fa-paper-plane"></i></a>
                                                     </th>
                                                     <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#delete_confirm<?php echo $row['id']; ?>" data-whatever="@delet" href="" name="delReq" id="delReq"> Delete Request <i class="fas fa-trash-alt"></i></a>
-                                                    </th>
-                                                    <th>
-                                                        <a type="button" data-bs-toggle="modal" data-bs-target="#chat_user<?php echo $row['id']; ?>" data-whatever="@chat" href="" name="chat_user"> Chat Now <i class="fa-solid fa-comment-dots"></i></a>
-                                                    </th>
-                                                    <th>
                                                         <?php
                                                         if ($type_plan == "Free") {
                                                             echo '<a type="button" data-bs-toggle="modal" data-bs-target="#purchase" data-whatever="@prchs" href="" name="prchase"> Purchase <i class="fas fa-eye"></i></a>';
@@ -1842,97 +1498,57 @@ if (isset($_SESSION['userId'])) {
                                     <div class="modal-content">
                                         <div class="modal-header ">
                                             <h5 class="modal-title" id="exampleModalLabel">User Profile</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body " style="padding: 2rem;">
-                                            <div class="row card shadow mb-4">
-                                                <div class="card-header py-3">
-                                                    <h6 class="m-0 font-weight-bold text-primary text-center">Profile</h6>
-                                                </div>
-                                                <div class="card-body col-lmd-12">
-                                                    <div class="row" style="line-height: 2;">
-                                                        <div class="col-md-4">
-                                                            <div class="text-center">
-                                                                <img class="img-fluid px-3 px-sm-4 mt-5 mb-4" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <!--<b>Name :</b> <?php echo $row['name']; ?><br>-->
-                                                            <b>E-mail :</b> <?php echo $row['email']; ?><br>
-                                                            <b>Phone Number :</b> <?php echo $row['phone']; ?><br>
-                                                            <?php
-                                                            $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php
-                                                            }
-                                                            $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  }
-                                                            $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
-                                                            $resultid = mysqli_query($conn, $sql1);
-                                                            while ($rowid = mysqli_fetch_array($resultid)) {
-                                                            ?>
-                                                                <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
-                                                            <?php  } ?>
-                                                            <b>Address :</b> <?php echo $row['address']; ?><br>
-                                                            <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
-                                                            <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
-                                                            <b>Diet :</b> <?php echo $row['diet']; ?><br>
-                                                            <b>Height :</b> <?php echo $row['height']; ?><br>
-                                                            <b>Religion :</b> <?php echo $row['religion']; ?><br>
-                                                            <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
-                                                            <b>Collage :</b> <?php echo $row['collage']; ?><br>
-                                                            <b>Profession :</b> <?php echo $row['prof']; ?><br>
-                                                            <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
-                                                            <b>Age :</b> <?php echo $row['bDate']; ?><br>
-                                                            <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
-                                                            <b>Birth Time :</b> <?php echo $row['bTime']; ?><br>
-                                                            <b>Income :</b> <?php echo $row['income']; ?> <br>
-                                                            <?php
-                                                            $res11 = mysqli_query($conn, "SELECT * FROM `table_plan` ");
-                                                            if ($res11) {
-                                                            ?>
-                                                                <b class="bold_title">Membership Plan :</b> <?php echo $row['type_plan']; ?>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </div>
+                                            <div class="row" style="line-height: 2;">
+                                                <div class="col-md-4">
+                                                    <div class="text-center">
+                                                        <img class="img-fluid" style="width: 16rem;border-radius: 11%;border: 1px solid #00aeaf;padding: 0 !important;" src="user_image/<?php echo $row['filename']; ?>" alt="Upload Image">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button name="" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <div class="col-md-4">
+                                                    <?php
+                                                    $sql1 = "SELECT * FROM `countries` where `id` = " . $row['country'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">Country :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php
+                                                    }
+                                                    $sql1 = "SELECT * FROM `states` where `id` = " . $row['state'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">State :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  }
+                                                    $sql1 = "SELECT * FROM `cities` where `id` = " . $row['city'];
+                                                    $resultid = mysqli_query($conn, $sql1);
+                                                    while ($rowid = mysqli_fetch_array($resultid)) {
+                                                    ?>
+                                                        <b class="bold_title">City :</b> <?php echo strtoupper($rowid['name']); ?><br>
+                                                    <?php  } ?>
+                                                    <b>Address :</b> <?php echo $row['address']; ?><br>
+                                                    <b>Marital Status :</b> <?php echo $row['marStat']; ?><br>
+                                                    <b>Mother Tongue :</b> <?php echo $row['lang']; ?><br>
+                                                    <b>Diet :</b> <?php echo $row['diet']; ?><br>
+                                                    <b>Height :</b> <?php echo $row['height']; ?><br>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <b>Religion :</b> <?php echo $row['religion']; ?><br>
+                                                    <b>Sub-Community :</b> <?php echo $row['sub-com']; ?><br>
+                                                    <b>Highest Education :</b> <?php echo $row['HighEdu']; ?><br>
+                                                    <b>Collage :</b> <?php echo $row['collage']; ?><br>
+                                                    <b>Profession :</b> <?php echo $row['prof']; ?><br>
+                                                    <b>Specialization :</b> <?php echo $row['specialization']; ?><br>
+                                                    <b>Blood Group :</b> <?php echo $row['bGrp']; ?><br>
+
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="delete_confirm<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="" method="post">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Confirm To Delete?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Do You Really Want to Delete this Request?
-                                                <input name="delete_id" type="hidden" class="form-control" id="delete_id" value="<?php echo $row['id']; ?>">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="delete_btn" type="submit" class="btn btn-danger" id="dlt_btn">Confirm</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-footer">
+                                            <button name="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1942,16 +1558,16 @@ if (isset($_SESSION['userId'])) {
                                         <form action="" method="post">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Confirm To send?</h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do You Really Want to send this Request to <?php echo $row['name']; ?> ?
+                                                Do You Really Want to send this Request to <b class="text-primary"><?php echo $row['member_id']; ?></b>?
                                                 <input name="send_id" type="hidden" class="form-control" id="send_id" value="<?php echo $row['id']; ?>">
-                                                <input name="usr_id" type="text" class="form-control" id="usr_id" value="<?php echo $sesn_id; ?>">
+
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                <button name="send_btn" type="submit" class="btn btn-danger" id="send_btn">Confirm</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button name="send_btn" type="submit" class="btn btn-danger" onclick="like(<?php echo $row['id']; ?>)" id="send_btn">Confirm</button>
                                             </div>
                                         </form>
                                     </div>
